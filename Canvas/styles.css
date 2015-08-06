@@ -1,0 +1,9 @@
+body{
+    background-color: lightgrey;
+
+}
+
+#Canvas1{
+    border: 3px double;
+    background-color: lightblue;
+}
