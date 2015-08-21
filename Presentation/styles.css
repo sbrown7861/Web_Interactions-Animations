@@ -1,0 +1,16 @@
+canvas{
+
+    border: solid 1px black;
+    clear: both;
+    margin: 30px;
+
+
+}
+
+#Canvas1{
+    background: lightgray;
+}
+
+#Canvas2{
+    background: #000000;
+}

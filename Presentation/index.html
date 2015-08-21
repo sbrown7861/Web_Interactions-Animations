@@ -1,0 +1,367 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Presentation</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+    <script src="paperjs/paper-full.js" rel="script" type="text/javascript"></script>
+    <script type="text/paperscript" src="js/script.js" canvas="Canvas1"></script>
+    <script type="text/paperscript" src="js/script2.js" canvas="Canvas2"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/styles/sunburst.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+        document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+
+        <!--<section> go here-->
+<section>
+
+        <section>
+
+
+
+            <h2>Paper.js plugin using Canvas</h2>
+
+                <p>Using paper.js took a bit to get used to after working with the normal canvas in HTML5 however, once I got the hang of it
+                    I found it to be quite powerful and robust. </p>
+
+
+                <canvas id="Canvas1" width="300" height="300">
+
+                    Your browser does not support canvas!
+
+                </canvas>
+
+        </section>
+
+            <section>
+                <h2>Code view for "Snow"</h2>
+
+                <pre><code>
+
+                    //&nbsp;No&nbsp;window&nbsp;onload&nbsp;function&nbsp;needed.&nbsp;It&nbsp;is&nbsp;built&nbsp;into&nbsp;paper.js&nbsp;and&nbsp;will&nbsp;cause&nbsp;an&nbsp;error&nbsp;and&nbsp;will&nbsp;not&nbsp;load.
+
+                    &nbsp;&nbsp;&nbsp;//Changes&nbsp;the&nbsp;ammount&nbsp;of&nbsp;objects&nbsp;on&nbsp;screen&nbsp;being&nbsp;created&nbsp;at&nbsp;a&nbsp;time
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;count&nbsp;=&nbsp;150;
+
+                    //&nbsp;Create&nbsp;a&nbsp;symbol,&nbsp;which&nbsp;we&nbsp;will&nbsp;use&nbsp;to&nbsp;place&nbsp;instances&nbsp;of&nbsp;later:
+                    &nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;path&nbsp;=&nbsp;new&nbsp;Path.Circle({
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;center:&nbsp;[0,&nbsp;0],
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;radius:&nbsp;10,
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fillColor:&nbsp;&apos;white&apos;,
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strokeColor:&nbsp;&apos;lightgrey&apos;
+                    &nbsp;&nbsp;&nbsp;&nbsp;});
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;symbol&nbsp;=&nbsp;new&nbsp;Symbol(path);
+
+                    //&nbsp;Place&nbsp;the&nbsp;instances&nbsp;of&nbsp;the&nbsp;symbol:
+                    &nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(var&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;count;&nbsp;i++)&nbsp;{
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;The&nbsp;center&nbsp;position&nbsp;is&nbsp;a&nbsp;random&nbsp;point&nbsp;in&nbsp;the&nbsp;view:
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;center&nbsp;=&nbsp;Point.random()&nbsp;*&nbsp;view.size;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;placedSymbol&nbsp;=&nbsp;symbol.place(center);
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;placedSymbol.scale(i&nbsp;/&nbsp;count);
+                    &nbsp;&nbsp;&nbsp;&nbsp;}
+
+                    //&nbsp;The&nbsp;onFrame&nbsp;function&nbsp;is&nbsp;called&nbsp;up&nbsp;to&nbsp;60&nbsp;times&nbsp;a&nbsp;second:
+                    &nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;onFrame(event)&nbsp;{
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(var&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;count;&nbsp;i++)&nbsp;{
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;item&nbsp;=&nbsp;project.activeLayer.children[i];
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;item.bounds.width&nbsp;changes&nbsp;the&nbsp;time&nbsp;of&nbsp;the&nbsp;animation
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item.position.y&nbsp;+=&nbsp;item.bounds.width&nbsp;/&nbsp;20;
+
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//sets&nbsp;the&nbsp;bounds&nbsp;and&nbsp;resets&nbsp;the&nbsp;animation&nbsp;based&nbsp;on&nbsp;the&nbsp;direction&nbsp;of&nbsp;the&nbsp;animation.
+
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(item.bounds.top&nbsp;&gt;&nbsp;view.size.width)&nbsp;{
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item.position.y&nbsp;=&nbsp;-item.bounds.width;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                    &nbsp;&nbsp;&nbsp;&nbsp;}
+
+
+
+                </code>
+                </pre>
+
+            </section>
+
+
+
+
+</section>
+
+        <section>
+
+
+        <section>
+
+            <p>Like normal canvas the developer uses javascript in order to plot paths and fills etc.
+            Unlike normal canvas paper.js does a lot of the calculations for the developer. It mostly uses points and size with various shapes instead of the normal path to and move to.
+             As can be seen in the snippet below.</p>
+
+        <canvas id="Canvas2" width="300" height="300">
+
+            Your browser does not support canvas!
+
+        </canvas>
+
+        </section>
+
+            <section>
+
+                <h2>Code view for "Space Travel"</h2>
+
+                <pre><code>
+
+                //&nbsp;No&nbsp;window&nbsp;onload&nbsp;function&nbsp;needed.&nbsp;It&nbsp;is&nbsp;built&nbsp;into&nbsp;paper.js&nbsp;and&nbsp;will&nbsp;cause&nbsp;an&nbsp;error&nbsp;and&nbsp;will&nbsp;not&nbsp;load.
+
+//Changes&nbsp;the&nbsp;ammount&nbsp;of&nbsp;objects&nbsp;on&nbsp;screen&nbsp;being&nbsp;created&nbsp;at&nbsp;a&nbsp;time
+
+var&nbsp;count&nbsp;=&nbsp;150;
+
+//&nbsp;Create&nbsp;a&nbsp;symbol,&nbsp;which&nbsp;we&nbsp;will&nbsp;use&nbsp;to&nbsp;place&nbsp;instances&nbsp;of&nbsp;later:
+var&nbsp;path&nbsp;=&nbsp;new&nbsp;Path.Rectangle({
+&nbsp;&nbsp;&nbsp;&nbsp;size:[5,5],
+&nbsp;&nbsp;&nbsp;&nbsp;fillColor:&nbsp;&apos;white&apos;,
+&nbsp;&nbsp;&nbsp;&nbsp;strokeColor:&nbsp;&apos;black&apos;
+});
+
+var&nbsp;symbol&nbsp;=&nbsp;new&nbsp;Symbol(path);
+
+//&nbsp;Place&nbsp;the&nbsp;instances&nbsp;of&nbsp;the&nbsp;symbol:
+for&nbsp;(var&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;count;&nbsp;i++)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;The&nbsp;center&nbsp;position&nbsp;is&nbsp;a&nbsp;random&nbsp;point&nbsp;in&nbsp;the&nbsp;view:
+&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;center&nbsp;=&nbsp;Point.random()&nbsp;*&nbsp;view.size;
+&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;placedSymbol&nbsp;=&nbsp;symbol.place(center);
+&nbsp;&nbsp;&nbsp;&nbsp;placedSymbol.scale(i&nbsp;/&nbsp;count);
+}
+
+//&nbsp;The&nbsp;onFrame&nbsp;function&nbsp;is&nbsp;called&nbsp;up&nbsp;to&nbsp;60&nbsp;times&nbsp;a&nbsp;second:
+function&nbsp;onFrame(event)&nbsp;{
+
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(var&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;count;&nbsp;i++)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;item&nbsp;=&nbsp;project.activeLayer.children[i];
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;item.bounds.width&nbsp;changes&nbsp;the&nbsp;time&nbsp;of&nbsp;the&nbsp;animation
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item.position.x&nbsp;+=&nbsp;item.bounds.width&nbsp;/&nbsp;.5;
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//sets&nbsp;the&nbsp;bounds&nbsp;and&nbsp;resets&nbsp;the&nbsp;animation&nbsp;based&nbsp;on&nbsp;the&nbsp;direction&nbsp;of&nbsp;the&nbsp;animation.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(item.bounds.left&nbsp;&gt;&nbsp;view.size.width)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item.position.x&nbsp;=&nbsp;-item.bounds.width;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}
+
+
+
+                </code>
+                </pre>
+
+            </section>
+
+
+        </section>
+
+
+        <section>
+            <h2>About paper.js</h2>
+
+            <p>As I was saying earlier paper.js does a lot of the work for the developer. If you go back to the slide in the<a href="#/1/1">Link</a>
+            one of the first things I figured out was there is no need for a window.onload function to be used with paper.js.
+            In fact if you try to do this it will cause an error to occur and nothing will run (Learned that the hard way.)
+            If you would like to read about paper.js yourself just click <a href="http://paperjs.org/about/" target="_blank">here</a> </p>
+
+        </section>
+
+
+        <section>
+
+            <h2>Getting started with paper.js</h2>
+            <p>For the sake of the presentation and explaining how to use paper.js I created two separate JavaScript files to run each canvas.</p>
+        </section>
+
+        <section>
+            <p>First off for my example I started with a variable for the ammount of objects to be displayed on the screen at a given time. In both instances I used 150.
+                this gave a pretty good density for the objects in the canvas but still left enough space for contrast against the background.
+            </p>
+
+            <pre><code>
+
+                //&nbsp;No&nbsp;window&nbsp;onload&nbsp;function&nbsp;needed.&nbsp;It&nbsp;is&nbsp;built&nbsp;into&nbsp;paper.js&nbsp;and&nbsp;will&nbsp;cause&nbsp;an&nbsp;error&nbsp;and&nbsp;will&nbsp;not&nbsp;load.
+
+                //Changes&nbsp;the&nbsp;ammount&nbsp;of&nbsp;objects&nbsp;on&nbsp;screen&nbsp;being&nbsp;created&nbsp;at&nbsp;a&nbsp;time
+
+                var&nbsp;count&nbsp;=&nbsp;150;
+
+
+            </code>
+            </pre>
+
+        </section>
+
+
+        <section>
+
+            <p>Next just like normal canvas the user would start a new path. In paper.js
+            shapes have their own Call and you do not need to specify in the fill and stroke attributes where you otherwise would using canvas.
+            So I created a new variable for path and used the built in Path.Circle to create the "Snowflakes." Since circle is already declared I just had to decide on the size
+            using radius. Fill and stroke are the same as canvas other than specifying what type of fill or stroke. </p>
+
+
+            <pre><code>
+
+                &nbsp;var&nbsp;path&nbsp;=&nbsp;new&nbsp;Path.Circle({
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;center:&nbsp;[0,&nbsp;0],
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;radius:&nbsp;10,
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fillColor:&nbsp;&apos;white&apos;,
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strokeColor:&nbsp;&apos;lightgrey&apos;
+                &nbsp;&nbsp;&nbsp;&nbsp;});
+
+            </code>
+            </pre>
+
+        </section>
+
+
+        <section>
+
+            <p>Here is where the animation starts to come into play. Using the new symbol and the integer value. I set it up to where there would always be 150 "Snowflakes" on the screen at a given time.
+            Also I used the .random attribute to control placement.</p>
+
+
+            <pre><code>
+
+                &nbsp;var&nbsp;symbol&nbsp;=&nbsp;new&nbsp;Symbol(path);
+
+                //&nbsp;Place&nbsp;the&nbsp;instances&nbsp;of&nbsp;the&nbsp;symbol:
+                &nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(var&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;count;&nbsp;i++)&nbsp;{
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;The&nbsp;center&nbsp;position&nbsp;is&nbsp;a&nbsp;random&nbsp;point&nbsp;in&nbsp;the&nbsp;view:
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;center&nbsp;=&nbsp;Point.random()&nbsp;*&nbsp;view.size;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;placedSymbol&nbsp;=&nbsp;symbol.place(center);
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;placedSymbol.scale(i&nbsp;/&nbsp;count);
+                &nbsp;&nbsp;&nbsp;&nbsp;}
+
+
+            </code>
+
+            </pre>
+
+        </section>
+
+        <section>
+
+            <p>Lastly the last part of the animation settings and the reset for the objects in the canvas. Setting the bounds and the direction of the flow is necessary. If you want the objects to "fall" down then the y value is needed. If you want the objects to go across then the x value is needed.</p>
+
+            <pre><code>
+
+                //&nbsp;The&nbsp;onFrame&nbsp;function&nbsp;is&nbsp;called&nbsp;up&nbsp;to&nbsp;60&nbsp;times&nbsp;a&nbsp;second:
+                &nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;onFrame(event)&nbsp;{
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(var&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;count;&nbsp;i++)&nbsp;{
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;item&nbsp;=&nbsp;project.activeLayer.children[i];
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;item.bounds.width&nbsp;changes&nbsp;the&nbsp;time&nbsp;of&nbsp;the&nbsp;animation
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item.position.y&nbsp;+=&nbsp;item.bounds.width&nbsp;/&nbsp;20;
+
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//sets&nbsp;the&nbsp;bounds&nbsp;and&nbsp;resets&nbsp;the&nbsp;animation&nbsp;based&nbsp;on&nbsp;the&nbsp;direction&nbsp;of&nbsp;the&nbsp;animation.
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(item.bounds.top&nbsp;&gt;&nbsp;view.size.width)&nbsp;{
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item.position.y&nbsp;=&nbsp;-item.bounds.width;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+                &nbsp;&nbsp;&nbsp;&nbsp;}
+
+
+            </code>
+            </pre>
+
+        </section>
+
+        <section>
+            <h2>Final Thoughts</h2>
+
+            <p>When I was first asked to use canvas it was very difficult for me and I felt the overall canvas lacking slightly with esthetics. I am sure with more experience the normal HTML5 canvas is great. I felt that using paper.js made that process easier, overall
+            I really enjoyed paper.js and would recommend it to anyone willing to give it a try.</p>
+
+        </section>
+
+
+
+
+
+    </div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'zoom', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            // { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+            // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+</script>
+
+</body>
+</html>
