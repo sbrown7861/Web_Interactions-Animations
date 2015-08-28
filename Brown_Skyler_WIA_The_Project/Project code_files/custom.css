@@ -1,0 +1,103 @@
+img{
+    padding: 1.256%;
+    margin: 1.256%;
+    clear: both;
+    float: left;
+    display:block;
+}
+
+p{
+    float: left;
+    clear: both;
+    color: #ffffff;
+
+}
+
+h1{
+    float: left;
+    clear: both;
+    color: orange;
+
+}
+
+h2{
+    float: left;
+    clear: both;
+    color: orange;
+
+}
+
+#videos{
+    width: auto;
+    height: auto;
+    padding: 1.256%;
+    margin: 1.256%;
+}
+
+body{
+    background: #333333;
+    width: 1140px;
+}
+
+html{
+    background: url("../images/simple-checker.gif"),repeat;
+}
+
+#slideshow{
+    clear: both;
+    margin-bottom: 10%;
+    width: 1140px;
+    height: 500px;
+}
+
+canvas {
+    opacity:1;
+    position:absolute;
+    top:10px;
+    left:10px;
+    transition:opacity 1s .2s;
+}
+div:hover canvas {
+    opacity:0;
+}
+
+
+/*Modal Styling*/
+
+#overlay {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: none;
+
+}
+
+
+
+
+#modal{
+    text-align: center;
+    width: 350px;
+    background: #cccccc;
+    box-shadow: 0 0 10px #000;
+    border-radius: 10px;
+    position: relative;
+    top: 50%;
+    left:50%;
+    overflow: hidden;
+    margin-top: -200px;
+    margin-left: -200px;
+    z-index: 1001;
+    display: none;
+}
+
+
+#map {
+    width: 350px;
+    height: 350px;
+}
