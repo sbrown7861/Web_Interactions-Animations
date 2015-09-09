@@ -31,9 +31,6 @@ $("document").ready(function() {
     });
 
 
-    if(Modernizr.canvas){
-
-
 
         $('#storeFront img').each(function() {
 
@@ -88,12 +85,6 @@ $("document").ready(function() {
 
 
 
-        else
-            { alert("your browser does not support canvas")
-        }
-    }}
-
-
 
 
     function initialize() {
@@ -113,5 +104,8 @@ $("document").ready(function() {
 
 
 
+
+
+}
 });
 
